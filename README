@@ -1,0 +1,29 @@
+Bosh
+=========
+
+The @bosh@ library handles creating and pre-authenticating BOSH streams inside your Ruby application before passing them off to your template engine. 
+
+This method allows you to hide authentication details for your users' XMPP accounts.  
+
+References
+==========
+BOSH: http://xmpp.org/extensions/xep-0124.html
+XMPP via BOSH: http://xmpp.org/extensions/xep-0206.html
+I took bit and pieces from Pradeep's RubyBosh: http://github.com/skyfallsin/ruby_bosh and rewrote most of the lib using Nokogiri.
+
+Example
+=======
+In your Ruby app controller (or equivalent):
+
+@connection = Bosh.connect("me@server.tld", "donttell", "http://localhost:5280/http-bind")
+
+You can also send messages on the line directly by doing @@connection.send(document)@ where document is @Nokogiri::XML::Document@
+
+In your template, you would then pass these directly to your javascript BOSH connector:
+
+var bosh_jid = '<%= @connection.jid %>';
+var bosh_sid = '<%= @connection.sid %>';
+var bosh_rid = '<%= @connection.rid %>';
+
+// using Strophe:
+connect.attach(bosh_jid, bosh_sid, bosh_rid, onConnectHandlerFunction); 
