@@ -75,6 +75,7 @@ class Bosh
     if !session.xpath("./stream:features/session:session", {"stream" => "http://etherx.jabber.org/streams", "session" => "urn:ietf:params:xml:ns:xmpp-session"}).empty?
       request_session
     end
+    send_presence
   end
   
   ##
@@ -107,6 +108,15 @@ class Bosh
     EOXML
     result = send(Nokogiri::XML::Document.parse(session))
     result["type"] == "result"
+  end
+  
+  ##
+  # Sends the initial presence to finish
+  def send_presence
+    pres = <<-EOXML
+      <presence/>
+    EOXML
+    result = send(Nokogiri::XML::Document.parse(pres))
   end
   
   ##

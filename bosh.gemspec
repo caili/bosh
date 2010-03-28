@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bosh}
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Julien Genestoux"]
@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
     "README",
      "Rakefile",
      "VERSION.yml",
+     "bosh.gemspec",
      "lib/bosh.rb",
      "spec/bosh_spec.rb",
      "spec/spec.opts",
@@ -30,7 +31,8 @@ Gem::Specification.new do |s|
   s.summary = %q{A BOSH session builder}
   s.test_files = [
     "spec/bosh_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "test/test.rb"
   ]
 
   if s.respond_to? :specification_version then
