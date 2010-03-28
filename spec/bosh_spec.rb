@@ -169,4 +169,7 @@ describe Bosh do
   describe :bind_ressource do
   end
   
+  describe :request_session do
+  end
+  
 end

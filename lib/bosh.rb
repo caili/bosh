@@ -72,8 +72,8 @@ class Bosh
     if !session.xpath("./stream:features/bind:bind", {"stream" => "http://etherx.jabber.org/streams", "bind" => "urn:ietf:params:xml:ns:xmpp-bind"}).empty?
       bind_ressource
     end
-    if !session.xpath("./stream:features/session:session", {"stream" => "http://etherx.jabber.org/streams", "session" => "urn:ietf:params:xml:ns:xmpp-session"})
-      # Create session?
+    if !session.xpath("./stream:features/session:session", {"stream" => "http://etherx.jabber.org/streams", "session" => "urn:ietf:params:xml:ns:xmpp-session"}).empty?
+      request_session
     end
   end
   
@@ -93,6 +93,20 @@ class Bosh
     result = send(Nokogiri::XML::Document.parse(bind))
     @jid = result.at_xpath("./bind:bind/bind:jid", {"bind" => "urn:ietf:params:xml:ns:xmpp-bind"}).text
     true
+  end
+  
+  ##
+  # Send session request
+  def request_session
+    session = <<-EOXML
+    <iq id='session_#{rand(1000)}'
+      type='set'
+      xmlns="jabber:client">
+      <session xmlns="urn:ietf:params:xml:ns:xmpp-session" />
+    </iq>
+    EOXML
+    result = send(Nokogiri::XML::Document.parse(session))
+    result["type"] == "result"
   end
   
   ##
