@@ -36,6 +36,8 @@ class Bosh
     @hold    = options[:hold]   || 1
     @window  = options[:window] || 10
     @rid     = options[:rid]    || rand(1000000)
+
+    @skip_pres = !!options[:skip_pres]
   end
   
   ##
@@ -75,7 +77,7 @@ class Bosh
     if !session.xpath("./stream:features/session:session", {"stream" => "http://etherx.jabber.org/streams", "session" => "urn:ietf:params:xml:ns:xmpp-session"}).empty?
       request_session
     end
-    send_presence
+    send_presence unless @skip_pres
   end
   
   ##
