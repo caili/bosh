@@ -38,6 +38,7 @@ class Bosh
     @rid     = options[:rid]    || rand(1000000)
 
     @skip_pres = !!options[:skip_pres]
+    @resource = options[:resource]
   end
   
   ##
@@ -84,12 +85,13 @@ class Bosh
   # Sends the resource binding stanza
   # Updates the @jid to reflect the resource.
   def bind_ressource
+    resource = @resource || rand(1000)
     bind = <<-EOXML
       <iq id='bind_#{rand(1000)}'
             type='set'
             xmlns='jabber:client'>
           <bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>
-            <resource>bosh_#{rand(1000)}</resource>
+            <resource>bosh_#{resource}</resource>
           </bind>
         </iq>
     EOXML
